@@ -1,0 +1,87 @@
+<!-- Styles -->
+<style>
+    #chartdiv {
+        width: 100%;
+        height: 500px;
+    }
+</style>
+
+<!-- Resources -->
+<script src="https://www.amcharts.com/lib/4/core.js"></script>
+<script src="https://www.amcharts.com/lib/4/charts.js"></script>
+<script src="https://www.amcharts.com/lib/4/themes/animated.js"></script>
+
+<!-- Chart code -->
+<script>
+    am4core.ready(function() {
+        // Themes begin
+        am4core.useTheme(am4themes_animated);
+        // Themes end
+
+        // Create chart instance
+        var chart = am4core.create("chartdiv", am4charts.XYChart);
+
+        // Add data
+        chart.data = [
+            {
+                paris_district: "1st",
+                fitness_center: 4,
+                fast_food: 5
+            },
+            {
+                paris_district: "2nd",
+                fitness_center: 4,
+                fast_food: 4
+            },
+            {
+                paris_district: "3rd",
+                fitness_center: 5,
+                fast_food: 7
+            }
+        ];
+
+        // Create axes
+        var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+        categoryAxis.dataFields.category = "paris_district";
+        categoryAxis.renderer.grid.template.location = 0;
+
+        var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+        valueAxis.renderer.inside = true;
+        valueAxis.renderer.labels.template.disabled = true;
+        valueAxis.min = 0;
+
+        // Create series
+        function createSeries(field, name) {
+            // Set up series
+            var series = chart.series.push(new am4charts.ColumnSeries());
+            series.name = name;
+            series.dataFields.valueY = field;
+            series.dataFields.categoryX = "paris_district";
+            series.sequencedInterpolation = true;
+
+            // Make it stacked
+            series.stacked = true;
+
+            // Configure columns
+            series.columns.template.width = am4core.percent(60);
+            series.columns.template.tooltipText =
+                "[bold]{name}[/]\n[font-size:14px]{categoryX}: {valueY}";
+
+            // Add label
+            var labelBullet = series.bullets.push(new am4charts.LabelBullet());
+            labelBullet.label.text = "{valueY}";
+            labelBullet.locationY = 0.5;
+
+            return series;
+        }
+
+        createSeries("fitness_center", "Fitness center");
+        createSeries("fast_food", "Fast food");
+
+        // Legend
+        chart.legend = new am4charts.Legend();
+    }); // end am4core.ready()
+</script>
+
+<!-- HTML -->
+<div id="chartdiv"></div>

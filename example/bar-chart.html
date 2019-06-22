@@ -29,19 +29,19 @@
                 visits: 3025
             },
             {
-                country: "2nd",
+                country: "12nd",
                 sport: 12,
                 visits: 1882
             },
             {
-                country: "3rd",
+                country: "18rd",
                 sport: 12,
                 visits: 1809
             },
             {
-                country: "4th",
-                sport: 12,
-                visits: 1322
+                country: "19th",
+                sport: 10,
+                visits: 1122
             }
         ];
 
@@ -59,7 +59,7 @@
             for (var i = 0; i < chart.data.length; i++) {
                 var value = chart.data[i].visits;
                 sum += value;
-                chart.data[i].pareto = (sum / total) * 100;
+                chart.data[i].Bad_habit = (sum / total) * 100;
             }
         }
 
@@ -112,10 +112,11 @@
         paretoValueAxis.cursorTooltipEnabled = false;
 
         var paretoSeries = chart.series.push(new am4charts.LineSeries());
-        paretoSeries.dataFields.valueY = "pareto";
+        paretoSeries.dataFields.valueY = "Bad_habit";
         paretoSeries.dataFields.categoryX = "country";
         paretoSeries.yAxis = paretoValueAxis;
-        paretoSeries.tooltipText = "pareto: {valueY.formatNumber('#.0')}%[/]";
+        paretoSeries.tooltipText =
+            "Bad habit: {valueY.formatNumber('#.0')}%[/]";
         paretoSeries.bullets.push(new am4charts.CircleBullet());
         paretoSeries.strokeWidth = 2;
         paretoSeries.stroke = new am4core.InterfaceColorSet().getFor(

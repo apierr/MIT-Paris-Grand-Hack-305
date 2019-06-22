@@ -50,6 +50,18 @@
         valueAxis.renderer.labels.template.disabled = true;
         valueAxis.min = 0;
 
+        var paretoSeries = chart.series.push(new am4charts.LineSeries());
+        paretoSeries.dataFields.valueY = "pareto";
+        paretoSeries.dataFields.categoryX = "paris_district";
+        paretoSeries.yAxis = valueAxis;
+        paretoSeries.tooltipText = "pareto: {valueY.formatNumber('#.0')}%[/]";
+        paretoSeries.bullets.push(new am4charts.CircleBullet());
+        paretoSeries.strokeWidth = 2;
+        paretoSeries.stroke = new am4core.InterfaceColorSet().getFor(
+            "alternativeBackground"
+        );
+        paretoSeries.strokeOpacity = 0.5;
+
         // Create series
         function createSeries(field, name) {
             // Set up series
@@ -75,8 +87,11 @@
             return series;
         }
 
-        createSeries("fitness_center", "Fitness center");
-        createSeries("fast_food", "Fast food");
+        createSeries(
+            "fitness_center",
+            "Number of fitness center per 500,000 population"
+        );
+        createSeries("fast_food", "Number of Fast food per 500,000 population");
 
         // Legend
         chart.legend = new am4charts.Legend();

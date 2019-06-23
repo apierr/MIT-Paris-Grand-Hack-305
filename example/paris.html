@@ -21,6 +21,13 @@
         <link rel="stylesheet" href="../dist/MarkerCluster.Default.css" />
         <script src="../dist/leaflet.markercluster-src.js"></script>
         <script src="paris.js"></script>
+        <style>
+            .leaflet-top.leaflet-right
+                .leaftlet-control-layers:nth-child(3)
+                .leaflet-control-layers-toggle {
+                background-image: url("paris.jpg"); /*set you value*/
+            }
+        </style>
     </head>
     <body>
         <div id="map"></div>
@@ -65,10 +72,10 @@
             populate();
 
             map.addLayer(markers);
-            map.eachLayer(function(layer) {
-                console.log(layer);
-                // map.removeLayer(layer);
-            });
+            // map.eachLayer(function(layer) {
+            //     console.log(layer);
+            //     // map.removeLayer(layer);
+            // });
 
             document.getElementById("doit").onclick = function() {
                 var m =
@@ -77,6 +84,27 @@
                     m.openPopup();
                 });
             };
+            var center = [48.890004, 2.276008];
+            var center2 = [48.890004, 2.395893];
+            var center3 = [48.820641, 2.419893];
+
+            // Create the map
+            // var map = L.map("map").setView(center, 5);
+
+            // Set up the OSM layer
+            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                attribution:
+                    'Data © <a href="http://osm.org/copyright">OpenStreetMap</a>',
+                maxZoom: 18
+            }).addTo(map);
+
+            // add a marker in the given location
+
+            var imageUrl =
+                    "https://www.hotel-design-secret-de-paris.com/blog/wp-content/uploads/2013/11/arrondissement-paris.gif",
+                imageBounds = [center, center3];
+
+            L.imageOverlay(imageUrl, imageBounds).addTo(map);
         </script>
     </body>
 </html>
